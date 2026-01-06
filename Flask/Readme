@@ -1,0 +1,28 @@
+How It Works
+
+User Authentication
+
+/login accepts username and password.
+If valid, it generates a JWT token containing the user’s role.
+
+Role-Based Access Control
+
+@role_required([...]) checks if the user’s role (from JWT claims) is in the allowed list.
+If not, returns 403 Forbidden.
+
+Endpoints
+
+/admin-data → Only admin can access.
+/edit-data → admin and editor can access.
+/view-data → All roles can access.
+
+Example Usage
+Bash# Login as admin
+curl -X POST http://127.0.0.1:5000/login \
+ -H "Content-Type: application/json" \
+ -d '{"username":"admin","password":"admin123"}'
+
+# Use token to access admin route
+
+curl -X GET http://127.0.0.1:5000/admin-data \
+ -H "Authorization: Bearer <TOKEN>"
